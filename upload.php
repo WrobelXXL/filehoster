@@ -23,7 +23,7 @@ if (!file_exists($counterFile)) {
 
 // Datei wurde per POST übergeben?
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
-    $file = $_FILES['file'];
+    $file = $_FILES['file'];  // ✅ Erst hier wird $file gesetzt
 
     // Upload-Fehler prüfen
     if ($file['error'] !== UPLOAD_ERR_OK) {
@@ -45,6 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
     $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
     $targetFile = $uploadDir . $newId . "." . strtolower($ext);
 
+    // Schreibrecht prüfen
     if (!is_writable($uploadDir)) {
         error_log("Upload-Verzeichnis ist nicht beschreibbar: $uploadDir");
         die("Upload-Verzeichnis nicht beschreibbar.");
