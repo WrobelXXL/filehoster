@@ -3,6 +3,13 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 $uploadDir = "files/";
+
+if ($file['error'] !== UPLOAD_ERR_OK) {
+    error_log("Datei-Upload-Fehler: " . $file['error']);
+    die("Fehler beim Datei-Upload (Fehlercode: " . $file['error'] . ").");
+}
+
+
 $counterFile = $uploadDir . "counter.txt";
 
 // Ordner anlegen, falls er nicht existiert
