@@ -39,6 +39,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
     $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
     $targetFile = $uploadDir . $newId . "." . strtolower($ext);
 
+    if (!is_writable($uploadDir)) {
+        error_log("Upload-Verzeichnis ist nicht beschreibbar: $uploadDir");
+        die("Upload-Verzeichnis nicht beschreibbar.");
+    }
+    
     // Datei verschieben
     if (!move_uploaded_file($file['tmp_name'], $targetFile)) {
         error_log("Fehler beim Speichern der Datei: " . $file['tmp_name'] . " -> " . $targetFile);
