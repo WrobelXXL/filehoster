@@ -3,13 +3,6 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 $uploadDir = "files/";
-
-if ($file['error'] !== UPLOAD_ERR_OK) {
-    error_log("Datei-Upload-Fehler: " . $file['error']);
-    die("Fehler beim Datei-Upload (Fehlercode: " . $file['error'] . ").");
-}
-
-
 $counterFile = $uploadDir . "counter.txt";
 
 // Ordner anlegen, falls er nicht existiert
@@ -32,6 +25,12 @@ if (!file_exists($counterFile)) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
     $file = $_FILES['file'];
 
+    // Upload-Fehler prüfen
+    if ($file['error'] !== UPLOAD_ERR_OK) {
+        error_log("Datei-Upload-Fehler: " . $file['error']);
+        die("Fehler beim Datei-Upload (Fehlercode: " . $file['error'] . ").");
+    }
+
     // Zähler hochzählen
     $currentId = (int)file_get_contents($counterFile);
     $newId = str_pad($currentId + 1, 6, "0", STR_PAD_LEFT);
@@ -50,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
         error_log("Upload-Verzeichnis ist nicht beschreibbar: $uploadDir");
         die("Upload-Verzeichnis nicht beschreibbar.");
     }
-    
+
     // Datei verschieben
     if (!move_uploaded_file($file['tmp_name'], $targetFile)) {
         error_log("Fehler beim Speichern der Datei: " . $file['tmp_name'] . " -> " . $targetFile);
