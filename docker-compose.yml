@@ -2,9 +2,10 @@ version: '3.8'
 
 services:
   web:
-    build: .
     container_name: filehoster
+    build: .
     ports:
       - "8110:80"
     volumes:
       - ./files:/var/www/html/files
+    restart: unless-stopped
