@@ -1,6 +1,6 @@
 <?php
 $uploadDir = "files/";
-$counterFile = "counter.txt";
+$counterFile = $uploadDir . "counter.txt";
 
 if (!file_exists($uploadDir)) {
     mkdir($uploadDir, 0755, true);
