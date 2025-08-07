@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
     file_put_contents($counterFile, $id);
 
     $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
-    $newFile = "$uploadDir/$id." . strtolower($ext);
+    $newFile = "$uploadDir$id." . strtolower($ext);
 
     move_uploaded_file($file['tmp_name'], $newFile);
     header("Location: /$id");
