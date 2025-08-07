@@ -5,6 +5,6 @@ services:
     build: .
     container_name: filehoster
     ports:
-      - "8080:80"
+      - "8110:80"
     volumes:
       - ./files:/var/www/html/files
